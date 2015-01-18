@@ -1,26 +1,33 @@
-class Hexagon extends GeoShape{
-  
-  public Hexagon(PVector pos){
-    position = pos;
+class Hexagon extends GeoShape {
+
+  public Hexagon(PVector pos) {
+    super.setPosition( pos);
   }
 
-  void drawShape(int x, int y){
-    pushMatrix();
-    translate(x, y);
-    rotate(rotationAngle);
-    beginShape( );
-    vertex(-40,0);
-    vertex(-20,20);
-    vertex(20,20);
-    vertex(40,0);
-    vertex(20,-20);
-    vertex(-20,-20);
-    vertex(-40,0);
-    endShape();
-    popMatrix();
+  public Hexagon( ) {
   }
-  
-  void setRotationAngle(float angle){
+
+  void drawShape() {
+    if (position != null) {
+      int x = (int)position.x;
+      int y = (int) position.y;
+      pushMatrix();
+      translate(x, y);
+      rotate(rotationAngle);
+      beginShape( );
+      vertex(-20, 0);
+      vertex(-10, 20);
+      vertex(10, 20);
+      vertex(20, 0);
+      vertex(10, -20);
+      vertex(-10, -20);
+      vertex(-20, 0);
+      endShape();
+      popMatrix();
+    }
+  }
+
+  void setRotationAngle(float angle) {
     rotationAngle = angle;
   }
 }

@@ -11,13 +11,13 @@ abstract class GeoShape {
     return position;
   }
 
-  abstract void drawShape(int x, int y);
+  
   abstract void setRotationAngle(float angle); 
-  void drawShape() {
-    drawShape((int)position.x, (int)position.y) ;
-  }
+  abstract void drawShape() ;
 
   protected float getRotationAngle() {
     return rotationAngle;
   }
+  
+  
 }
