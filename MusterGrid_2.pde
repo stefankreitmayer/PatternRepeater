@@ -1,6 +1,6 @@
-import java.util.Iterator; //<>//
+import java.util.Iterator; 
 
-//HashMap<PVector, GeoShape> grid;    //dann halt 2d array....
+
 GeoShape[][]grid;
 GeoShape current;
 ArrayList<GeoShape>shapes;
@@ -13,19 +13,20 @@ float rotationAngle = PI/2;
 boolean rotate = false;
 boolean hex = true;
 boolean hexFirst;
-boolean debug = false;
+
+
+//************************************+
+
 void setup() {
   size(FIELDS*GRID_SIZE, FIELDS*GRID_SIZE);
   grid = new GeoShape[18][18];
   shapes = new ArrayList<GeoShape>();
-  //setUpGrid();
 }
 
 //************************************+
 
 void draw() {
   background(128 );
-  //drawGrid();
   drawShapes();
 }
 
@@ -36,7 +37,7 @@ void mouseReleased( ) {
   PVector pos = getCurrentPosition();  
   GeoShape shape = setUpShape(pos);
   addToGrid(pos, shape);
- // createPattern();
+  createPattern();
 }
 
 //************************************+
@@ -52,34 +53,32 @@ void keyPressed( ) {
 //************************************+
 
 void drawShapes() {
-  if(debug)
 
-  for (int i = 0; i < 18; i++) {
-    for (int j = 0; j < 18; j++) {
-      if (grid[i][j] != null) {
-        if(initialShape(grid[i][j])){
-          fill(220);
+
+    for (int i = 0; i < 18; i++) {
+      for (int j = 0; j < 18; j++) {
+        if (grid[i][j] != null) {
+          if (initialShape(grid[i][j])) {
+            fill(220);
+          } else {
+            fill(255);
+          }
+          grid[i][j] .drawShape();
         }
-        else{
-          fill(255);
-        }
-        grid[i][j] .drawShape();
       }
     }
-  }
 }
 
 //************************************+
 
-boolean initialShape(GeoShape shape){
- if(initialHex != null && initialHex.getPosition() != null && shape.getPosition().equals(initialHex.getPosition() )){
-   return true;
-  
- } else if(initialRect != null && initialRect.getPosition() != null && shape.getPosition().equals(initialRect.getPosition() )){
-   return true;
- }
- 
- return false;
+boolean initialShape(GeoShape shape) {
+  if (initialHex != null && initialHex.getPosition() != null && shape.getPosition().equals(initialHex.getPosition() )) {
+    return true;
+  } else if (initialRect != null && initialRect.getPosition() != null && shape.getPosition().equals(initialRect.getPosition() )) {
+    return true;
+  }
+
+  return false;
 }
 
 //************************************+
@@ -133,7 +132,6 @@ void addToGrid(PVector pos, GeoShape shape) {
   } else if (gridShape.getClass() != shape.getClass() || gridShape.getRotationAngle() != shape.getRotationAngle()) {
     grid[xIndex][yIndex] = shape;
   }
-  createPattern();
 }
 
 //************************************+
@@ -146,8 +144,8 @@ void createPattern() {
     int xOffset = getXOffset();
     int yOffset = getYOffset();
     setShapeOrder();
-    debug = true;   
-    if (xOffset == 0) {
+       
+    if (yOffset != 0 ) {
       //für yOffset == 0 und xOffset == 0??? 
       //if(pos %(2*Offset == 0)){drawFirstShape)else if (pos%offset == null){drawSecondShape}
       // und wenn beide != 0 ????
@@ -161,9 +159,21 @@ void createPattern() {
             drawSecondShape(x, y);
           }
           counter++;
-        }println("createPattern loop bei y = "+ y);
+        }
+      }        
+      }else if( xOffset != 0){
+    int counter = 0;
+      for (int y = 1; y < FIELDS; y++) {
+        for (int x = 1; x < FIELDS; x++) {
+
+          if (counter%(2*xOffset) == 0) {
+            drawFirstShape(x, y);
+          } else if (counter %xOffset == 0) {
+            drawSecondShape(x, y);
+          }
+          counter++;
+        }
       }
-    } else if (yOffset== 0) {
     } else {
     }
   }
@@ -175,15 +185,13 @@ void drawFirstShape(int x, int y) {
   } else {
     grid[y][x] = new Rectangel(new PVector(y*GRID_SIZE, x*GRID_SIZE));
   }
-  //grid[y][y].drawShape();
 }
 void drawSecondShape(int x, int y) {
   if (hexFirst) {
     grid[y][x] = new Rectangel(new PVector(y*GRID_SIZE, x*GRID_SIZE));
   } else {
     grid[y][x] = new Hexagon(new PVector(y*GRID_SIZE, x*GRID_SIZE));
-  }
-  //grid[y][y].drawShape();
+  }  
 }
 
 
