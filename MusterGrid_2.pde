@@ -8,7 +8,7 @@ Hexagon initialHex;
 Rectangel initialRect;
 final int GRID_SIZE = 40;
 final int FIELDS = 18;
-final int OFFSET = 10;
+final int OFFSET = 0;
 float rotationAngle = PI/2;
 boolean rotate = false;
 boolean hex = true;
@@ -53,7 +53,7 @@ void keyPressed( ) {
 //************************************+
 
 void drawShapes() {
-
+//FIXME mel hier noch unterschiedliche F
 
     for (int i = 0; i < 18; i++) {
       for (int j = 0; j < 18; j++) {
@@ -98,6 +98,7 @@ GeoShape setUpShape(PVector pos) {
     shape = new Hexagon(pos);
     if (initialHex == null) {
       initialHex  = new Hexagon(pos);
+      println("new initial hex at: "+pos.x+":"+pos.y);
       initialHex.setRotationAngle(rotationAngle);
     }
     if (initialRect != null && initialRect.position.equals(pos )) {
@@ -107,6 +108,7 @@ GeoShape setUpShape(PVector pos) {
     shape = new Rectangel(pos);
     if (initialRect == null) {
       initialRect = new Rectangel(pos);
+      println("new initial rect at: "+pos.x+":"+pos.y);
       initialRect.setRotationAngle(rotationAngle);
     }
     if (initialHex != null && initialHex.position.equals(pos )) {
