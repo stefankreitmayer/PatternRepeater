@@ -53,8 +53,6 @@ void keyPressed( ) {
 //************************************+
 
 void drawShapes() {
-//FIXME mel hier noch unterschiedliche F
-
     for (int i = 0; i < 18; i++) {
       for (int j = 0; j < 18; j++) {
         if (grid[i][j] != null) {
@@ -134,6 +132,19 @@ void addToGrid(PVector pos, GeoShape shape) {
   } else if (gridShape.getClass() != shape.getClass() || gridShape.getRotationAngle() != shape.getRotationAngle()) {
     grid[xIndex][yIndex] = shape;
   }
+  
+  updateInitialShape(shape);
+}
+//************************************+
+
+void updateInitialShape(GeoShape shape){
+  if(shape.getClass() == initialHex.getClass()){
+    initialHex.position = shape.getPosition();
+  }
+  else if (shape.getClass() == initialHex.getClass()){
+    initialRect.position = shape.getPosition();
+  }
+  
 }
 
 //************************************+
@@ -147,7 +158,7 @@ void createPattern() {
     int yOffset = getYOffset();
     setShapeOrder();
        
-    if (yOffset != 0 ) {
+    if (yOffset != 0  && xOffset == 0) {
       //für yOffset == 0 und xOffset == 0??? 
       //if(pos %(2*Offset == 0)){drawFirstShape)else if (pos%offset == null){drawSecondShape}
       // und wenn beide != 0 ????
@@ -163,7 +174,7 @@ void createPattern() {
           counter++;
         }
       }        
-      }else if( xOffset != 0){
+      }else if( xOffset != 0 && yOffset == 0){
     int counter = 0;
       for (int y = 1; y < FIELDS; y++) {
         for (int x = 1; x < FIELDS; x++) {
