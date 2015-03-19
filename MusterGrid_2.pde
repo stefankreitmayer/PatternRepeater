@@ -13,13 +13,14 @@ float rotationAngle = PI/2;
 boolean rotate = false;
 boolean hex = true;
 boolean hexFirst;
+boolean debug = false;
 
 
 //************************************+
 
 void setup() {
   size(FIELDS*GRID_SIZE, FIELDS*GRID_SIZE);
-  grid = new GeoShape[18][18];
+  grid = new GeoShape[FIELDS][FIELDS];
   shapes = new ArrayList<GeoShape>();
 }
 
@@ -53,18 +54,18 @@ void keyPressed( ) {
 //************************************+
 
 void drawShapes() {
-    for (int i = 0; i < 18; i++) {
-      for (int j = 0; j < 18; j++) {
-        if (grid[i][j] != null) {
-          if (initialShape(grid[i][j])) {
-            fill(220);
-          } else {
-            fill(255);
-          }
-          grid[i][j] .drawShape();
+  for (int i = 0; i < FIELDS; i++) {
+    for (int j = 0; j < FIELDS; j++) {
+      if (grid[i][j] != null) {
+        if (initialShape(grid[i][j])) {
+          fill(220);
+        } else {
+          fill(255);
         }
+        grid[i][j] .drawShape();
       }
     }
+  }
 }
 
 //************************************+
@@ -132,19 +133,17 @@ void addToGrid(PVector pos, GeoShape shape) {
   } else if (gridShape.getClass() != shape.getClass() || gridShape.getRotationAngle() != shape.getRotationAngle()) {
     grid[xIndex][yIndex] = shape;
   }
-  
+
   updateInitialShape(shape);
 }
 //************************************+
 
-void updateInitialShape(GeoShape shape){
-  if(shape.getClass() == initialHex.getClass()){
+void updateInitialShape(GeoShape shape) {
+  if (shape.getClass() == initialHex.getClass()) {
     initialHex.position = shape.getPosition();
-  }
-  else if (shape.getClass() == initialHex.getClass()){
+  } else if (shape.getClass() == initialHex.getClass()) {
     initialRect.position = shape.getPosition();
   }
-  
 }
 
 //************************************+
@@ -157,13 +156,15 @@ void createPattern() {
     int xOffset = getXOffset();
     int yOffset = getYOffset();
     setShapeOrder();
-       
+
     if (yOffset != 0  && xOffset == 0) {
+      println("y-pattern");
       //für yOffset == 0 und xOffset == 0??? 
       //if(pos %(2*Offset == 0)){drawFirstShape)else if (pos%offset == null){drawSecondShape}
       // und wenn beide != 0 ????
-      int counter = 0;
-      for (int y = 1; y < FIELDS; y++) {
+      int counter ;
+      counter = 0;
+      for (int y = 1; y < FIELDS; y++) {      
         for (int x = 1; x < FIELDS; x++) {
 
           if (counter%(2*yOffset) == 0) {
@@ -173,10 +174,12 @@ void createPattern() {
           }
           counter++;
         }
-      }        
-      }else if( xOffset != 0 && yOffset == 0){
-    int counter = 0;
+      }
+    } else if ( xOffset != 0 && yOffset == 0) {      
+      int counter;
+      counter = 0;
       for (int y = 1; y < FIELDS; y++) {
+
         for (int x = 1; x < FIELDS; x++) {
 
           if (counter%(2*xOffset) == 0) {
@@ -184,6 +187,7 @@ void createPattern() {
           } else if (counter %xOffset == 0) {
             drawSecondShape(x, y);
           }
+
           counter++;
         }
       }
@@ -193,6 +197,8 @@ void createPattern() {
 }
 
 void drawFirstShape(int x, int y) {
+  if (debug)  
+    println("first shape @ "+x+", "+y);
   if (hexFirst) {
     grid[y][x] = new Hexagon(new PVector(y*GRID_SIZE, x*GRID_SIZE));
   } else {
@@ -200,21 +206,25 @@ void drawFirstShape(int x, int y) {
   }
 }
 void drawSecondShape(int x, int y) {
+  if (debug)  
+    println("second shape @ "+x+", "+y);
   if (hexFirst) {
     grid[y][x] = new Rectangel(new PVector(y*GRID_SIZE, x*GRID_SIZE));
   } else {
     grid[y][x] = new Hexagon(new PVector(y*GRID_SIZE, x*GRID_SIZE));
-  }  
+  }
 }
 
 
 
-//************************************+
+//************************************
 
 private int getYOffset()
 {
 
   int offset = int(Math.abs(initialHex.getPosition().y - initialRect.getPosition().y) )/GRID_SIZE;
+  if (debug)
+    println("y-Offset "+offset);
   return offset;
 }
 
@@ -223,6 +233,8 @@ private int getYOffset()
 private int getXOffset()
 {
   int offset = int(Math.abs(initialHex.getPosition().x - initialRect.getPosition().x) )/GRID_SIZE;
+  if (debug)
+    println("x-Offset "+offset);
   return offset;
 }
 
