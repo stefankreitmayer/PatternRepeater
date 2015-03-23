@@ -7,6 +7,9 @@ class Blob {
   private float distance;
   private int radius = grid.pixelSize/2;
 
+  private boolean isPositionXCached;
+  private boolean isPositionYCached;
+
   /* Constructor for root */
   Blob(int absoluteX, int absoluteY) {
     this.absoluteX = absoluteX;
@@ -33,11 +36,19 @@ class Blob {
   }
 
   float positionX() {
-    return grid.quantize(isPositionAbsolute ? absoluteX : parent.positionX() + distance * cos(angle));
+    if (isPositionXCached) {
+      return absoluteX;
+    }
+    isPositionXCached = true;
+    return absoluteX = grid.quantize(isPositionAbsolute ? absoluteX : parent.positionX() + distance * cos(angle));
   }
 
   float positionY() {
-    return grid.quantize(isPositionAbsolute ? absoluteY : parent.positionY() + distance * sin(angle));
+    if (isPositionYCached) {
+      return absoluteY;
+    }
+    isPositionYCached = true;
+    return absoluteY = grid.quantize(isPositionAbsolute ? absoluteY : parent.positionY() + distance * sin(angle));
   }
 
   boolean isRoot() {
