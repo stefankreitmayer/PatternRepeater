@@ -22,10 +22,14 @@ class Blob {
     isPositionAbsolute = false;
   }
 
-  void addBlob(int childX, int childY) {
+  void addChild(int childX, int childY) {
     float angle = atan2(childY-positionY(), childX-positionX());
     float distance = dist(childX, childY, positionX(), positionY());
     head = new Blob(head, angle, distance);
+  }
+
+  void addChildByCopy(Blob other) {
+    head = new Blob(head, other.angle, other.distance);
   }
 
   float positionX() {
@@ -47,4 +51,13 @@ class Blob {
   float getRadius() {
     return radius;
   }
+
+  float getAngle() {
+    return angle;
+  }
+
+  void rotate(float rotationAngle) {
+    angle += rotationAngle;
+  }
 }
+
