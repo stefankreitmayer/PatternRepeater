@@ -40,12 +40,11 @@ class Blob {
     return parent == null;
   }
 
-  void display() {
-    if (!isRoot()) {
-      line(positionX(), positionY(), parent.positionX(), parent.positionY());
-      parent.display();
-    }
-    ellipseMode(RADIUS);
-    ellipse(positionX(), positionY(), radius, radius);
+  Blob getParent() {
+    return parent;
+  }
+
+  float getRadius() {
+    return radius;
   }
 }

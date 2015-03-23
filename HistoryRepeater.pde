@@ -1,4 +1,5 @@
 Blob head;
+Painter painter = new Painter();
 
 void setup() {
   size(400, 400);
@@ -8,7 +9,7 @@ void setup() {
 void draw() {
   background(127);
   if (head!=null) {
-    head.display();
+    painter.paintBlob(head);
   }
 }
 
