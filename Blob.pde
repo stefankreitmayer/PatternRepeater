@@ -5,7 +5,7 @@ class Blob {
   private int absoluteY;
   private float angle;
   private float distance;
-  private int radius = 5;
+  private int radius = grid.pixelSize/2;
 
   /* Constructor for root */
   Blob(int absoluteX, int absoluteY) {
@@ -33,11 +33,11 @@ class Blob {
   }
 
   float positionX() {
-    return isPositionAbsolute ? absoluteX : parent.positionX() + distance * cos(angle);
+    return grid.quantize(isPositionAbsolute ? absoluteX : parent.positionX() + distance * cos(angle));
   }
 
   float positionY() {
-    return isPositionAbsolute ? absoluteY : parent.positionY() + distance * sin(angle);
+    return grid.quantize(isPositionAbsolute ? absoluteY : parent.positionY() + distance * sin(angle));
   }
 
   boolean isRoot() {
