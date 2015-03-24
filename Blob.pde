@@ -69,6 +69,12 @@ class Blob {
 
   void rotate(float rotationAngle) {
     angle += rotationAngle;
+    invalidatePositionCache();
+  }
+
+  private void invalidatePositionCache() {
+    isPositionXCached = false;
+    isPositionYCached = false;
   }
 }
 
