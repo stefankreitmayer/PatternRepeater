@@ -18,10 +18,12 @@ class Looper {
 
   void appendCopiesToHead(int numberOfCopies) {
     for (int icopy=0; icopy<numberOfCopies; icopy++) {
+      int fillColor = icopy % 2 == 0 ? color(100, 250, 200) : color(100, 200, 250);
       for (int iblob=0; iblob<clip.size (); iblob++) {
         Blob b = clip.get(iblob);
         Blob newBlob = new Blob(head, b.angle, b.distance);
         newBlob.rotate((icopy+1)*clipRotation);
+        newBlob.setFillColor(fillColor);
         if (grid.isEmptyAt(newBlob.positionX(), newBlob.positionY(), head)) {
           head = newBlob;
         } else {

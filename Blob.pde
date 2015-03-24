@@ -10,6 +10,9 @@ class Blob {
   private boolean isPositionXCached;
   private boolean isPositionYCached;
 
+  private int polygonNumberOfSides = 6;
+  private color fillColor = color(255);
+
   /* Constructor for root */
   Blob(int absoluteX, int absoluteY) {
     this.absoluteX = absoluteX;
@@ -72,6 +75,20 @@ class Blob {
   private void invalidatePositionCache() {
     isPositionXCached = false;
     isPositionYCached = false;
+  }
+
+  int getPolygonNumberOfSides() {
+    return polygonNumberOfSides;
+  }
+  void setPolygonNumberOfSides(int n) {
+    polygonNumberOfSides = n;
+  }
+
+  void setFillColor(color c) {
+    fillColor = c;
+  }
+  color getFillColor() {
+    return fillColor;
   }
 }
 
