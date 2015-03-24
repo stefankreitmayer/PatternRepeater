@@ -17,13 +17,18 @@ void draw() {
 }
 
 void mouseReleased() {
-  int x = mouseX;
-  int y = mouseY;
+  int x = grid.quantize(mouseX);
+  int y = grid.quantize(mouseY);
   if (head==null)
   {
     head = new Blob(x, y);
   } else {
     head.addChild(x, y);
+    if (!grid.isEmptyAt(head.positionX(), head.positionY(), head.getParent())) {
+      warn("Blobs may not overlap.");
+      head = head.getParent(); //rollback
+      return;
+    }
   }
   redraw();
 }

@@ -31,9 +31,6 @@ class Blob {
     head = new Blob(head, angle, distance);
   }
 
-  void addChildByCopy(Blob other) {
-    head = new Blob(head, other.angle, other.distance);
-  }
 
   float positionX() {
     if (isPositionXCached) {

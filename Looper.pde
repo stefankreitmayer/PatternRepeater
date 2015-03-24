@@ -19,15 +19,16 @@ class Looper {
   void appendCopiesToHead(int numberOfCopies) {
     for (int icopy=0; icopy<numberOfCopies; icopy++) {
       for (int iblob=0; iblob<clip.size (); iblob++) {
-        head.addChildByCopy(clip.get(iblob));
-        head.rotate((icopy+1)*clipRotation);
+        Blob b = clip.get(iblob);
+        Blob newBlob = new Blob(head, b.angle, b.distance);
+        newBlob.rotate((icopy+1)*clipRotation);
+        if (grid.isEmptyAt(newBlob.positionX(), newBlob.positionY(), head)) {
+          head = newBlob;
+        } else {
+          warn("Collision on grid. Aborting copy action.");
+          return;
+        }
       }
-    }
-  }
-
-  void pasteToHead() {
-    for (int i=0; i<clip.size (); i++) {
-      head.addChildByCopy(clip.get(i));
     }
   }
 }
